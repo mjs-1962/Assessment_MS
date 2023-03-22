@@ -1,0 +1,212 @@
+﻿@model SurveyRecord
+
+        <div asp-validation-asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+<form method="post" asp-action="Create">
+    <div class="guv-question-page-container">
+        <div class="guv-question-page-content">
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <h1 class="guv-title">Full Name</h1>
+                    <div class="guv-content">
+                        <input class="form-control input-font" asp-for="FullName" name="FullName" id="FullName" onchange="ValidateFullName()">
+                        <span id="FullNameValidation" class="text-danger"></span>
+                    </div>
+                    <div class="guv-action-button">
+                        <a class="guv-continue btn guv-green-button" onclick="ValidateFullName()">Continue</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <div class="guv-back-button">
+                        <a onclick="changePageAndUpdateCheckItems(-1)" class="link-dark">Back</a>
+                    </div>
+                    <h1 class="guv-title">Email address</h1>
+                    <h4 class="guv-information">We’ll only use this to send you a receipt</h4>
+                    <div class="guv-content">
+                        <p id="email-error" class="govuk-error-message hide-error">
+                            <span class="govuk-visually-hidden">Error:</span> Enter your email address
+                        </p>
+                        <input class="form-control" asp-for="EmailAddress" name="EmailAddress" id="EmailAddress">
+                        <span id="EmailAddressValidation" class="text-danger"></span>
+                    </div>
+                    <div class="guv-action-button">
+                        <a class="guv-continue btn guv-green-button" onclick="ValidateEmailAddress()">Continue</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <div class="guv-back-button">
+                        <a onclick="changePageAndUpdateCheckItems(-1)" class="link-dark">Back</a>
+                    </div>
+                    <h1 class="guv-title">What is your address?</h1>
+                    <div class="guv-content">
+                        <fieldset class="govuk-fieldset">
+                            <div class="form-group guv-address-group">
+                                <label>Address line 1</label>
+                                <input class="form-control" asp-for="AddressLine1" name="AddressLine1" id="AddressLine1">
+                                <span id="AddressLine1Validation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group guv-address-group">
+                                <label>Address line 2 (optional)</label>
+                                <input class="form-control" asp-for="AddressLine2" name="AddressLine2" id="AddressLine2">
+                                <span id="AddressLine2Validation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group guv-address-group">
+                                <label>Town or city</label>
+                                <input class="form-control" asp-for="Town" name="Town" id="Town">
+                                <span id="TownValidation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group guv-address-group">
+                                <label>County</label>
+                                <input class="form-control" asp-for="County" name="County" id="County">
+                                <span id="CountyValidation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group guv-address-group">
+                                <label>Postcode</label>
+                                <input class="form-control" asp-for="Postcode" name="Postcode" id="Postcode">
+                                <span id="PostcodeValidation" class="text-danger"></span>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="guv-action-button">
+                        <a class="guv-continue btn guv-green-button" onclick="ValidateAddress()">Continue</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <div class="guv-back-button">
+                        <a onclick="changePageAndUpdateCheckItems(-1)" class="link-dark">Back</a>
+                    </div>
+                    <h1 class="guv-title">Are you satisfied with the level of street lighting outside your home?</h1>
+                    <div class="guv-content">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="BrightnessAcceptanceYes" value=true class="custom-control-input" asp-for="BrightnessAcceptance" name="BrightnessAcceptance" onclick=setBrightnessAcceptanceYes(true) required>
+                            <label for="BrightnessAcceptanceYes" class="custom-control-label">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" id="BrightnessAcceptanceNo" value=false class="custom-control-input" asp-for="BrightnessAcceptance" name="BrightnessAcceptance" onclick=setBrightnessAcceptanceYes(false) required>
+                            <label for="BrightnessAcceptanceNo" class="custom-control-label">No</label>
+                        </div>
+                        <span id="BrightnessAcceptanceValidation" class="text-danger"></span>
+                    </div>
+                    <div class="guv-action-button">
+                        <a class="guv-continue btn guv-green-button" onclick="ValidateBrightnessAcceptance()">Continue</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <div class="guv-back-button">
+                        <a onclick="changePageAndUpdateCheckItems(-1)" class="link-dark">Back</a>
+                    </div>
+                    <h1 class="guv-title">Level of brightness</h1>
+                    <h4 class="guv-information">Please select the level of brightness outside your hone on a scale of 1 - 10, 1 being very dark and 10 being very bright</h4>
+                    <div class="guv-content">
+                        <select class="form-select" asp-for=BrightnessLevel name="BrightnessLevel" id="BrightnessLevel">
+                            <option value="choose" selected>Choose level of brightness</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span id="BrightnessLevelValidation" class="text-danger"></span>
+                    </div>
+                    <div class="guv-action-button">
+                        <a class="guv-continue btn guv-green-button" onclick="ValidateBrightnessLevel()">Continue</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="guv-grid-container">
+                    <div class="guv-back-button">
+                        <a onclick="changePageAndUpdateCheckItems(-1)" class="link-dark">Back</a>
+                    </div>
+                    <h1 class="guv-title">Check your answers before sending your survey</h1>
+                    <h4 class="guv-information">If you are happy with the answers shown below, you are now ready to submit your survey</h4>
+                    <div class="guv-content">
+                        <div class="guv-check-container">
+                            <div class="guv-check-question-title">Full Name</div>
+                            <d class="guv-check-question-answer"><label id="LabelFullName"></label></d>
+                            <div class="guv-check-question-link">
+                                <a class="link-dark" onclick="jumpToTab(0)">Change</a>
+                            </div>
+                        </div>
+                        <div class="guv-check-container">
+                            <div class="guv-check-question-title">Email</div>
+                            <div class="guv-check-question-answer"><label id="LabelEmailAddress"></label></div>
+                            <div class="guv-check-question-link">
+                                <a class="link-dark" onclick="jumpToTab(1)">Change</a>
+                            </div>
+                        </div>
+                        <div class="guv-check-container">
+                            <div class="guv-check-question-title">Address</div>
+                            <div class="guv-check-question-answer">
+                                <label id="LabelAddressLine1"></label>
+                                <label id="LabelAddressLine2"></label>
+                                <label id="LabelTown"></label>
+                                <label id="LabelCounty"></label>
+                                <label id="LabelPostcode"></label>
+                            </div>
+                            <div class="guv-check-question-link">
+                                <a class="link-dark" onclick="jumpToTab(2)">Change</a>
+                            </div>
+                        </div>
+                        <div class="guv-check-container">
+                            <div class="guv-check-question-title">Brightness Acceptance</div>
+                            <div class="guv-check-question-answer"><label id="LabelBrightnessAcceptance"></label></div>
+                            <div class="guv-check-question-link">
+                                <a class="link-dark" onclick="jumpToTab(3)">Change</a>
+                            </div>
+                        </div>
+                        <div class="guv-check-container">
+                            <div class="guv-check-question-title">Lighting Level</div>
+                            <div class="guv-check-question-answer"><label id="LabelBrightnessLevel"></label></div>
+                            <div class="guv-check-question-link">
+                                <a class="link-dark" onclick="jumpToTab(4)">Change</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guv-action-button">
+                        <button type="submit" class="guv-continue btn guv-green-button">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    <script language="javascript">
+
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+
+
+
+
+    </script>
+}
+
